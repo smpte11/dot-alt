@@ -1,0 +1,77 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 4
+console_title_template = "{{if .Root}}(Admin){{end}} {{.PWD}}"
+
+[upgrade]
+  source = "cdn"
+  interval = "168h"
+  auto = false
+  notice = false
+
+[transient_prompt]
+  template = "❯ "
+  foreground = "#ffc4ff" # Magenta
+  foreground_templates = ["{{ if gt .Code 0 }}#ff5f5f{{ end }}"] # High-contrast Red
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+
+  [[blocks.segments]]
+    template = "{{ .UserName }} "
+    foreground = "#ff5f5f" # High-contrast Red
+    type = "session"
+    style = "plain"
+
+  [[blocks.segments]]
+    template = "{{ .Path }} "
+    foreground = "#42f7ff" # Electric Blue
+    type = "path"
+    style = "plain"
+
+    [blocks.segments.options]
+      style = "full"
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+
+  [[blocks.segments]]
+    type = "jujutsu"
+    style = 'plain'
+    foreground = "#e2e98f"
+
+    [blocks.segments.options]
+      fetch_status = true
+      ignore_working_copy = false
+      fetch_ahead_counter = true
+      ahead_icon = "⇡"
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+
+  [[blocks.segments]]
+    template = " {{ .FormattedMs }} "
+    foreground = "#9ff895" # Mint Green
+    type = "executiontime"
+    style = "plain"
+
+    [blocks.segments.options]
+      style = "austin"
+
+[[blocks]]
+  type = "prompt"
+  alignment = "left"
+  newline = true
+
+  [[blocks.segments]]
+    template = "❯ "
+    foreground = "#ffc4ff" # Magenta
+    type = "status"
+    style = "plain"
+    foreground_templates = ["{{ if gt .Code 0 }}#ff5f5f{{ end }}"] # High-contrast Red
+
+    [blocks.segments.options]
+      always_enabled = true
