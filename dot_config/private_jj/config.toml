@@ -1,4 +1,15 @@
-#:schema https://docs.jj-vcs.dev/latest/config-schema.json
+#:schema https://jj-vcs.github.io/jj/latest/config-schema.json
+[ui]
+# SCENARIO: `jj log`, `jj diff`, `jj show`
+# Used for quick, read-only viewing in the terminal.
+paginate = "never"
+default-command = "log"
+# diff-editor = ["nvim", "-c", "DiffEditor $left $right $output"]
+# 'curved' or 'square' usually looks cleaner than the default 'ascii'
+graph.style = "curved"
+
+[settings]
+diff.format = "color-words"
 
 [user]
 name = "Felix Brousseau-Tremblay"
@@ -19,4 +30,27 @@ daily_work = '(trunk()..((bookmarks() | mine()) & recent) | trunk()..@) & ~autho
 active = 'trunk()..((mine() & recent) | @ | (@ & bookmarks()))'
 
 [aliases]
+fetch = ["git", "fetch"]
+push = ["git", "push"]
+# Re-graft the branch of current commits on trunk to the latest upstream commit
+lift = ["rebase", "--source", "roots(trunk()..@)", "--destination", "trunk()"]
 tug = ["bookmark", "move", "--from", "heads(::@- & bookmarks())", "--to", "@-"]
+day = ["log", "-r", "daily_work"]
+now = ["log", "-r", "active"]
+
+[remotes.origin]
+auto-track-bookmarks = "*"
+
+[templates]
+log = '''
+label(if(current_working_copy, "working_copy"),
+  concat(
+    format_short_id(change_id), " ",
+    author.name(), " ",
+    author.timestamp().format("%Y-%m-%d %H:%M"), " ",
+    bookmarks,
+    "\n",
+    description.first_line(),
+  )
+)
+'''
