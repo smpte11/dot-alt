@@ -25,8 +25,12 @@ use std/util "path add"
 path add '/home/linuxbrew/.linuxbrew/bin'
 path add '/home/linuxbrew/.linuxbrew/sbin'
 
+path add '/opt/homebrew/bin'
+path add '/opt/homebrew/sbin'
+
 ## ${UserConfigDir}/nushell/env.nu
 $env.CARAPACE_BRIDGES = 'zsh,fish,bash,inshellisense' # optional
 mkdir $"($nu.cache-dir)"
 carapace _carapace nushell | save --force $"($nu.cache-dir)/carapace.nu"
 
+zoxide init nushell --cmd cd | save -f ~/.zoxide.nu
